@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartSpend - Expense Tracker</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Animated Background -->
+    <div class="background">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="navbar">
+
+        <div class="logo">
+            <div class="logo-icon">₹</div>
+            <div>
+                <h2>SmartSpend</h2>
+                <span>Expense Intelligence</span>
+            </div>
+        </div>
+
+        <div class="nav-actions">
+            <button id="themeBtn" class="icon-btn">☀️</button>
+            <button class="profile">N</button>
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <!-- Welcome -->
+        <section class="welcome">
+            <div>
+                <p class="small-title">WELCOME BACK 👋</p>
+                <h1>Manage your money <span>smartly.</span></h1>
+                <p class="description">
+                    Track your expenses, control your budget and understand your spending.
+                </p>
+            </div>
+
+            <button class="primary-btn" onclick="openModal()">
+                + Add Expense
+            </button>
+        </section>
+
+
+        <!-- Summary Cards -->
+        <section class="summary-grid">
+
+            <div class="summary-card">
+                <div class="card-top">
+                    <span>Total Balance</span>
+                    <div class="card-icon blue">₹</div>
+                </div>
+
+                <h2 id="balance">₹0</h2>
+                <p class="positive">Available balance</p>
+            </div>
+
+
+            <div class="summary-card">
+                <div class="card-top">
+                    <span>Total Income</span>
+                    <div class="card-icon green">↗</div>
+                </div>
+
+                <h2 id="income">₹0</h2>
+                <p class="positive">Money received</p>
+            </div>
+
+
+            <div class="summary-card">
+                <div class="card-top">
+                    <span>Total Expense</span>
+                    <div class="card-icon red">↘</div>
+                </div>
+
+                <h2 id="expense">₹0</h2>
+                <p class="negative">Money spent</p>
+            </div>
+
+
+            <div class="summary-card">
+                <div class="card-top">
+                    <span>Monthly Budget</span>
+                    <div class="card-icon purple">🎯</div>
+                </div>
+
+                <h2 id="budgetText">₹10,000</h2>
+
+                <div class="progress">
+                    <div id="budgetProgress"></div>
+                </div>
+
+                <p id="budgetStatus">Budget available</p>
+            </div>
+
+        </section>
+
+
+        <!-- Main Grid -->
+        <section class="dashboard-grid">
+
+            <!-- Transactions -->
+            <div class="panel transactions-panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Recent Transactions</h2>
+                        <p>Your latest financial activity</p>
+                    </div>
+
+                    <button onclick="clearAll()" class="clear-btn">
+                        Clear All
+                    </button>
+                </div>
+
+
+                <div class="filters">
+
+                    <input
+                        type="text"
+                        id="search"
+                        placeholder="🔍 Search transactions..."
+                        onkeyup="renderTransactions()"
+                    >
+
+                    <select id="filter" onchange="renderTransactions()">
+                        <option value="all">All</option>
+                        <option value="food">Food</option>
+                        <option value="transport">Transport</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="education">Education</option>
+                        <option value="bills">Bills</option>
+                        <option value="other">Other</option>
+                    </select>
+
+                </div>
+
+
+                <div id="transactionList" class="transaction-list">
+                    <!-- JavaScript will add transactions -->
+                </div>
+
+            </div>
+
+
+            <!-- Analytics -->
+            <div class="panel analytics-panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Spending Overview</h2>
+                        <p>Where your money goes</p>
+                    </div>
+                </div>
+
+
+                <div class="chart-container">
+
+                    <div class="donut">
+                        <div class="donut-center">
+                            <strong id="chartTotal">₹0</strong>
+                            <span>Spent</span>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="category-list">
+
+                    <div class="category">
+                        <span>
+                            <i class="dot food"></i>
+                            Food
+                        </span>
+                        <strong id="foodAmount">₹0</strong>
+                    </div>
+
+                    <div class="category">
+                        <span>
+                            <i class="dot transport"></i>
+                            Transport
+                        </span>
+                        <strong id="transportAmount">₹0</strong>
+                    </div>
+
+                    <div class="category">
+                        <span>
+                            <i class="dot shopping"></i>
+                            Shopping
+                        </span>
+                        <strong id="shoppingAmount">₹0</strong>
+                    </div>
+
+                    <div class="category">
+                        <span>
+                            <i class="dot education"></i>
+                            Education
+                        </span>
+                        <strong id="educationAmount">₹0</strong>
+                    </div>
+
+                    <div class="category">
+                        <span>
+                            <i class="dot bills"></i>
+                            Bills
+                        </span>
+                        <strong id="billsAmount">₹0</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Financial Insight -->
+        <section class="insight">
+
+            <div class="insight-icon">💡</div>
+
+            <div>
+                <h3>Smart Financial Insight</h3>
+                <p id="insightText">
+                    Add some expenses to receive personalized spending insights.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Add Expense Modal -->
+    <div id="modal" class="modal">
+
+        <div class="modal-box">
+
+            <button class="close" onclick="closeModal()">×</button>
+
+            <div class="modal-title">
+                <span>💳</span>
+                <div>
+                    <h2>Add Transaction</h2>
+                    <p>Record your financial activity</p>
+                </div>
+            </div>
+
+
+            <form id="expenseForm">
+
+                <label>Transaction Type</label>
+
+                <div class="type-buttons">
+
+                    <button
+                        type="button"
+                        class="type active"
+                        data-type="expense">
+                        Expense
+                    </button>
+
+                    <button
+                        type="button"
+                        class="type"
+                        data-type="income">
+                        Income
+                    </button>
+
+                </div>
+
+
+                <label>Amount</label>
+
+                <div class="amount-input">
+                    <span>₹</span>
+
+                    <input
+                        type="number"
+                        id="amount"
+                        placeholder="0.00"
+                        min="1"
+                        required
+                    >
+                </div>
+
+
+                <label>Description</label>
+
+                <input
+                    type="text"
+                    id="description"
+                    placeholder="e.g. Lunch at college"
+                    required
+                >
+
+
+                <label>Category</label>
+
+                <select id="category">
+
+                    <option value="food">🍔 Food</option>
+                    <option value="transport">🚌 Transport</option>
+                    <option value="shopping">🛍️ Shopping</option>
+                    <option value="education">📚 Education</option>
+                    <option value="bills">💡 Bills</option>
+                    <option value="other">📦 Other</option>
+
+                </select>
+
+
+                <label>Date</label>
+
+                <input
+                    type="date"
+                    id="date"
+                    required
+                >
+
+
+                <button class="submit-btn" type="submit">
+                    Save Transaction
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
