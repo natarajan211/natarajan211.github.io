@@ -6,7 +6,7 @@ let transactions =
     JSON.parse(localStorage.getItem("smartSpendTransactions")) || [];
 
 let budget =
-    Number(localStorage.getItem("smartSpendBudget")) || 10000;
+    Number(localStorage.getItem("smartSpendBudget")) || 100000;
 
 let currentType = "expense";
 
