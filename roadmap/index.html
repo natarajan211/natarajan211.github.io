@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PathPilot - Coding Roadmap</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Background -->
+    <div class="bg-circle circle1"></div>
+    <div class="bg-circle circle2"></div>
+    <div class="bg-circle circle3"></div>
+
+    <!-- Navbar -->
+    <header class="navbar">
+
+        <div class="logo">
+            <span>🚀</span>
+            <div>
+                <h2>PathPilot</h2>
+                <small>Learning Roadmap</small>
+            </div>
+        </div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#generator">Roadmap</a>
+            <a href="#resources">Learn & Train</a>
+        </nav>
+
+    </header>
+
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+
+        <div class="hero-content">
+
+            <div class="badge">
+                🚀 Beginner Friendly
+            </div>
+
+            <h1>
+                Learn Coding
+                <span>From Scratch</span>
+            </h1>
+
+            <p>
+                Choose a programming language and career goal.
+                PathPilot creates a step-by-step learning roadmap
+                with concepts, logic, practice and projects.
+            </p>
+
+            <button onclick="goToGenerator()" class="main-btn">
+                Create My Roadmap →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- Generator -->
+    <section class="section" id="generator">
+
+        <div class="section-heading">
+
+            <span>STEP 01</span>
+
+            <h2>Create Your Roadmap</h2>
+
+            <p>
+                Enter your details and choose what you want to learn.
+            </p>
+
+        </div>
+
+
+        <div class="generator">
+
+            <!-- Name -->
+            <div class="input-group">
+
+                <label>👤 Your Name</label>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your name"
+                >
+
+            </div>
+
+
+            <!-- Education -->
+            <div class="input-group">
+
+                <label>🎓 Education</label>
+
+                <select id="education">
+
+                    <option value="">
+                        Select education
+                    </option>
+
+                    <option>B.Tech IT</option>
+                    <option>B.Tech CSE</option>
+                    <option>BCA</option>
+                    <option>B.Sc Computer Science</option>
+                    <option>Diploma</option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Level -->
+            <div class="input-group">
+
+                <label>🌱 Current Level</label>
+
+                <div class="level-container">
+
+                    <button
+                        class="level active"
+                        data-level="beginner"
+                        onclick="chooseLevel(this)"
+                    >
+
+                        🌱
+                        <div>
+                            <b>Beginner</b>
+                            <small>Start from scratch</small>
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        class="level"
+                        data-level="basic"
+                        onclick="chooseLevel(this)"
+                    >
+
+                        📚
+                        <div>
+                            <b>Basic</b>
+                            <small>I know fundamentals</small>
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Language -->
+            <div class="input-group">
+
+                <label>💻 Choose Language</label>
+
+                <div class="languages">
+
+
+                    <button
+                        class="language"
+                        data-language="python"
+                        onclick="chooseLanguage(this)"
+                    >
+
+                        <div class="python logo-icon">
+                            🐍
+                        </div>
+
+                        <div>
+                            <b>Python</b>
+                            <small>Beginner Friendly</small>
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        class="language"
+                        data-language="java"
+                        onclick="chooseLanguage(this)"
+                    >
+
+                        <div class="java logo-icon">
+                            ☕
+                        </div>
+
+                        <div>
+                            <b>Java</b>
+                            <small>Software Development</small>
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        class="language"
+                        data-language="javascript"
+                        onclick="chooseLanguage(this)"
+                    >
+
+                        <div class="javascript logo-icon">
+                            JS
+                        </div>
+
+                        <div>
+                            <b>JavaScript</b>
+                            <small>Web Development</small>
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        class="language"
+                        data-language="c"
+                        onclick="chooseLanguage(this)"
+                    >
+
+                        <div class="c logo-icon">
+                            C
+                        </div>
+
+                        <div>
+                            <b>C</b>
+                            <small>Programming Fundamentals</small>
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Career -->
+            <div class="input-group">
+
+                <label>🎯 Career Goal</label>
+
+                <select id="career">
+
+                    <option value="">
+                        Select career
+                    </option>
+
+                    <option>Software Developer</option>
+
+                    <option>Full Stack Developer</option>
+
+                    <option>Data Analyst</option>
+
+                    <option>AI / ML Engineer</option>
+
+                    <option>Cybersecurity Engineer</option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                class="generate"
+                onclick="generateRoadmap()"
+            >
+
+                🚀 Generate My Roadmap
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- Result -->
+    <section
+        class="section result-section"
+        id="result"
+    >
+
+        <div class="section-heading">
+
+            <span>STEP 02</span>
+
+            <h2 id="welcome"></h2>
+
+            <p>
+                Your personalized learning journey
+            </p>
+
+        </div>
+
+
+        <!-- Dashboard -->
+        <div class="dashboard">
+
+            <div class="dashboard-card">
+
+                <span>💻 Language</span>
+
+                <strong id="showLanguage">-</strong>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <span>🎯 Career</span>
+
+                <strong id="showCareer">-</strong>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <span>📊 Progress</span>
+
+                <strong>
+                    <span id="progressText">0</span>%
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- Progress -->
+        <div class="progress-box">
+
+            <div class="progress-info">
+
+                <span>Learning Progress</span>
+
+                <b>
+                    <span id="progressNumber">0</span>%
+                </b>
+
+            </div>
+
+            <div class="progress">
+
+                <div
+                    id="progressBar"
+                    class="progress-bar"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Recommendation -->
+        <div class="recommendation">
+
+            <span>🤖</span>
+
+            <div>
+
+                <small>PATHPILOT RECOMMENDATION</small>
+
+                <p id="recommendationText">
+                    Start learning Level 1.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Roadmap -->
+        <div id="roadmap"></div>
+
+    </section>
+
+
+    <!-- Resources -->
+    <section
+        class="section"
+        id="resources"
+    >
+
+        <div class="section-heading">
+
+            <span>STEP 03</span>
+
+            <h2>Learn & Train</h2>
+
+            <p>
+                Learn concepts and practice your skills.
+            </p>
+
+        </div>
+
+
+        <div class="resource-grid">
+
+
+            <div class="resource">
+
+                <div class="resource-icon">
+                    📚
+                </div>
+
+                <h3>Learn — W3Schools</h3>
+
+                <p>
+                    Beginner-friendly tutorials,
+                    examples and programming concepts.
+                </p>
+
+                <a
+                    id="w3Link"
+                    href="https://www.w3schools.com/"
+                    target="_blank"
+                >
+                    Open W3Schools →
+                </a>
+
+            </div>
+
+
+            <div class="resource">
+
+                <div class="resource-icon">
+                    💻
+                </div>
+
+                <h3>Train — Coddy</h3>
+
+                <p>
+                    Practice programming with
+                    interactive coding exercises.
+                </p>
+
+                <a
+                    href="https://coddy.tech/"
+                    target="_blank"
+                >
+                    Open Coddy →
+                </a>
+
+            </div>
+
+
+            <div class="resource">
+
+                <div class="resource-icon">
+                    🧠
+                </div>
+
+                <h3>Programming Logic</h3>
+
+                <p>
+                    Learn how conditions, loops,
+                    functions and algorithms work.
+                </p>
+
+                <a
+                    href="https://www.w3schools.com/"
+                    target="_blank"
+                >
+                    Learn Logic →
+                </a>
+
+            </div>
+
+
+            <div class="resource">
+
+                <div class="resource-icon">
+                    🏆
+                </div>
+
+                <h3>Build Projects</h3>
+
+                <p>
+                    Apply your knowledge by building
+                    real-world beginner projects.
+                </p>
+
+                <a
+                    href="#generator"
+                >
+                    Start Building →
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <h2>🚀 PathPilot</h2>
+
+        <p>
+            Learn • Practice • Build • Grow
+        </p>
+
+        <small>
+            © 2026 PathPilot
+        </small>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
