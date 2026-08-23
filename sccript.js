@@ -43,7 +43,7 @@ const words = [
 
     "Python Programmer",
 
-    "Java Developer",
+    /*"Java Developer",*/
 
     "Problem Solver",
 
