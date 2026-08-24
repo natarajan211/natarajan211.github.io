@@ -462,3 +462,11 @@ window.addEventListener(
 
 
 revealOnScroll();
+
+
+/*-----------------------------audio -----------------------*/
+   const music = document.getElementById("music");
+
+    document.addEventListener("click", function () {
+        music.play();
+    }, { once: true });
