@@ -142,7 +142,7 @@ typingEffect();
 
 
 /* =========================================
-   PARTICLE BACKGROUND
+   TERMINAL RAIN BACKGROUND
 ========================================= */
 
 const canvas =
@@ -151,270 +151,133 @@ const canvas =
 const ctx =
     canvas.getContext("2d");
 
+const fontSize = 17;
 
-let particles = [];
+const columnGap = 22;
+
+const reducedMotion =
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let canvasWidth = 0;
+
+let canvasHeight = 0;
+
+let pixelRatio = 1;
+
+let streams = [];
 
 
 function resizeCanvas() {
 
+    canvasWidth = window.innerWidth;
+
+    canvasHeight = window.innerHeight;
+
+    pixelRatio =
+        Math.min(window.devicePixelRatio || 1, 2);
+
     canvas.width =
-        window.innerWidth;
+        Math.round(canvasWidth * pixelRatio);
 
     canvas.height =
-        window.innerHeight;
+        Math.round(canvasHeight * pixelRatio);
+
+    ctx.setTransform(
+        pixelRatio,
+        0,
+        0,
+        pixelRatio,
+        0,
+        0
+    );
+
+    const columnCount =
+        Math.ceil(canvasWidth / columnGap);
+
+    streams = Array.from(
+        { length: columnCount },
+        (_, index) => ({
+            x: index * columnGap,
+            y: Math.random() * canvasHeight,
+            speed: 1.2 + Math.random() * 2.4,
+            trailLength: 6 + Math.floor(Math.random() * 9)
+        })
+    );
+
+    if (reducedMotion) {
+        drawTerminalRain();
+    }
 
 }
 
 
-window.addEventListener(
-    "resize",
-    resizeCanvas
-);
+function drawTerminalRain() {
 
+    ctx.clearRect(
+        0,
+        0,
+        canvasWidth,
+        canvasHeight
+    );
+
+    ctx.font =
+        `${fontSize}px Consolas, "Courier New", monospace`;
+
+    ctx.textAlign = "center";
+
+    streams.forEach(stream => {
+
+        for (
+            let step = 0;
+            step < stream.trailLength;
+            step++
+        ) {
+            const y =
+                stream.y - step * fontSize;
+
+            if (y < 0 || y > canvasHeight) {
+                continue;
+            }
+
+            const character =
+                Math.random() < 0.5 ? "0" : "1";
+
+            const opacity =
+                0.62 * (1 - step / stream.trailLength);
+
+            ctx.fillStyle =
+                step === 0
+                    ? "#d5ffe3"
+                    : `rgba(76, 255, 145, ${opacity})`;
+
+            ctx.fillText(
+                character,
+                stream.x,
+                y
+            );
+        }
+
+        if (!reducedMotion) {
+            stream.y += stream.speed;
+
+            if (stream.y - stream.trailLength * fontSize > canvasHeight) {
+                stream.y = -Math.random() * canvasHeight * 0.35;
+            }
+        }
+    });
+
+    if (!reducedMotion) {
+        requestAnimationFrame(drawTerminalRain);
+    }
+}
+
+window.addEventListener("resize", resizeCanvas);
 
 resizeCanvas();
 
-
-/* =========================================
-   PARTICLE CLASS
-========================================= */
-
-class Particle {
-
-    constructor() {
-
-        this.x =
-            Math.random() *
-            canvas.width;
-
-        this.y =
-            Math.random() *
-            canvas.height;
-
-        this.size =
-            Math.random() * 2 + 0.5;
-
-        this.speedX =
-            (Math.random() - 0.5) *
-            0.5;
-
-        this.speedY =
-            (Math.random() - 0.5) *
-            0.5;
-
-    }
-
-
-    update() {
-
-        this.x += this.speedX;
-
-        this.y += this.speedY;
-
-
-        if (
-            this.x < 0 ||
-            this.x > canvas.width
-        ) {
-
-            this.speedX *= -1;
-
-        }
-
-
-        if (
-            this.y < 0 ||
-            this.y > canvas.height
-        ) {
-
-            this.speedY *= -1;
-
-        }
-
-    }
-
-
-    draw() {
-
-        ctx.beginPath();
-
-
-        ctx.arc(
-
-            this.x,
-
-            this.y,
-
-            this.size,
-
-            0,
-
-            Math.PI * 2
-
-        );
-
-
-        ctx.fillStyle =
-            "rgba(0,229,255,0.8)";
-
-
-        ctx.fill();
-
-    }
-
+if (!reducedMotion) {
+    requestAnimationFrame(drawTerminalRain);
 }
-
-
-/* =========================================
-   CREATE PARTICLES
-========================================= */
-
-function createParticles() {
-
-    particles = [];
-
-
-    const amount =
-        Math.min(
-
-            120,
-
-            Math.floor(
-                window.innerWidth / 10
-            )
-
-        );
-
-
-    for (
-        let i = 0;
-        i < amount;
-        i++
-    ) {
-
-        particles.push(
-            new Particle()
-        );
-
-    }
-
-}
-
-
-createParticles();
-
-
-/* =========================================
-   PARTICLE ANIMATION
-========================================= */
-
-function animateParticles() {
-
-    ctx.clearRect(
-
-        0,
-
-        0,
-
-        canvas.width,
-
-        canvas.height
-
-    );
-
-
-    particles.forEach(
-        particle => {
-
-            particle.update();
-
-            particle.draw();
-
-        }
-    );
-
-
-    /* Connect particles */
-
-    for (
-        let i = 0;
-        i < particles.length;
-        i++
-    ) {
-
-        for (
-            let j = i + 1;
-            j < particles.length;
-            j++
-        ) {
-
-            const dx =
-                particles[i].x -
-                particles[j].x;
-
-            const dy =
-                particles[i].y -
-                particles[j].y;
-
-
-            const distance =
-                Math.sqrt(
-                    dx * dx +
-                    dy * dy
-                );
-
-
-            if (distance < 120) {
-
-                ctx.beginPath();
-
-
-                ctx.moveTo(
-
-                    particles[i].x,
-
-                    particles[i].y
-
-                );
-
-
-                ctx.lineTo(
-
-                    particles[j].x,
-
-                    particles[j].y
-
-                );
-
-
-                ctx.strokeStyle =
-                    `rgba(
-                        0,
-                        229,
-                        255,
-                        ${1 - distance / 120}
-                    )`;
-
-
-                ctx.lineWidth = 0.5;
-
-                ctx.stroke();
-
-            }
-
-        }
-
-    }
-
-
-    requestAnimationFrame(
-        animateParticles
-    );
-
-}
-
-
-animateParticles();
 
 
 /* =========================================
